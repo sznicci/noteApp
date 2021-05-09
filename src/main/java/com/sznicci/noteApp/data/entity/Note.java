@@ -12,11 +12,11 @@ public class Note {
 
     private String title;
     private String content;
-    private ArrayList<String> tags;
+    private ArrayList<Tag> tags;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 
-    public Note(String title, String content, ArrayList<String> tags, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    public Note(String title, String content, ArrayList<Tag> tags, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.title = title;
         this.content = content;
         this.tags = tags;
@@ -44,11 +44,11 @@ public class Note {
         this.content = content;
     }
 
-    public ArrayList<String> getTags() {
+    public ArrayList<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(ArrayList<String> tags) {
+    public void setTags(ArrayList<Tag> tags) {
         this.tags = tags;
     }
 
