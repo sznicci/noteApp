@@ -10,13 +10,15 @@ public class Note {
     @Id
     private String id;
 
+    private Owner owner;
     private String title;
     private String content;
     private ArrayList<Tag> tags;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 
-    public Note(String title, String content, ArrayList<Tag> tags, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    public Note(Owner owner, String title, String content, ArrayList<Tag> tags, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+        this.owner = owner;
         this.title = title;
         this.content = content;
         this.tags = tags;
@@ -26,6 +28,14 @@ public class Note {
 
     public String getId() {
         return id;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public String getTitle() {
@@ -72,6 +82,7 @@ public class Note {
     public String toString() {
         return "Note{" +
                 "id='" + id + '\'' +
+                ", owner=" + owner +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", tags=" + tags +

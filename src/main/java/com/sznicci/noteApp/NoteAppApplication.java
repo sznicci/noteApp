@@ -1,8 +1,10 @@
 package com.sznicci.noteApp;
 
 import com.sznicci.noteApp.data.entity.Note;
+import com.sznicci.noteApp.data.entity.Owner;
 import com.sznicci.noteApp.data.entity.Tag;
 import com.sznicci.noteApp.data.repositories.NoteRepository;
+import com.sznicci.noteApp.data.repositories.OwnerRepository;
 import com.sznicci.noteApp.data.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +21,8 @@ public class NoteAppApplication implements CommandLineRunner {
 	private NoteRepository noteRepository;
 	@Autowired
 	private TagRepository tagRepository;
+	@Autowired
+	private OwnerRepository ownerRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(NoteAppApplication.class, args);
@@ -28,6 +32,7 @@ public class NoteAppApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		noteRepository.deleteAll();
 		tagRepository.deleteAll();
+		ownerRepository.deleteAll();
 
 		Tag redTag = new Tag("personal", "red");
 		Tag blueTag = new Tag("work", "blue");
@@ -39,12 +44,24 @@ public class NoteAppApplication implements CommandLineRunner {
 
 		ArrayList<Tag> tags2 = new ArrayList<>();
 		tags2.add(blueTag);
-		noteRepository.save(new Note("title1", "some content", tags1, LocalDateTime.now(), LocalDateTime.now()));
-		noteRepository.save(new Note("title2", "content for second note", tags2, LocalDateTime.now().plusMinutes(2), LocalDateTime.now().plusMinutes(2).plusSeconds(5)));
+
+		Owner owner1 = new Owner("Alan");
+		Owner owner2 = new Owner("Aang");
+		ownerRepository.save(owner1);
+		ownerRepository.save(owner2);
+
+		noteRepository.save(new Note(owner1,"title1", "some content", tags1, LocalDateTime.now(), LocalDateTime.now()));
+		noteRepository.save(new Note(owner2, "title2", "content for second note", tags2, LocalDateTime.now().plusMinutes(2), LocalDateTime.now().plusMinutes(2).plusSeconds(5)));
 
 		// all
 		System.out.println("findAll()");
 		for (Note note : noteRepository.findAll()) {
+			System.out.println(note + "\n");
+		}
+
+		// by owner
+		System.out.println("findByOwner()");
+		for (Note note : noteRepository.findByOwner("Alan")) {
 			System.out.println(note + "\n");
 		}
 
